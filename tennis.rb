@@ -10,24 +10,13 @@ module Tennis
       @player2.opponent = @player1
     end
 
-    # Records a win for a ball in a game.
-    #
-    # winner - The Integer (1 or 2) representing the winning player.
-    #
-    # Returns the score of the winning player. 
+    # Records a win for a ball in a game.       
+    # Returns the score of the winning player.  
     
     def wins_ball(winner)
-      # TODO: Think it's gross to pass an integer instead of a player object?
-      # Then reimplement this method!
-      if (winner == 1)
-        @player1.points += 1;
-      else 
-        @player2.points += 1;
-      end
+      winner.points += 1
     end
-
-    end
-  
+  end
 
   class Player
     attr_accessor :points, :opponent
@@ -37,19 +26,22 @@ module Tennis
     end
 
     # Increments the score by 1.
-    #
     # Returns the integer new score.
 
     def record_won_ball!
       @points += 1
     end
 
-    # Returns the String score for the player.
+    # Returns a string message for the player. 
     def score
-      return 'love' if @points == 0
-      return 'fifteen' if @points == 1
-      return 'thirty' if @points == 2
-      return 'forty' if @points == 3
+      return "Sorry, you lost the game!" if (@points == 0 || @points == 1 || @points == 2) && @opponent.points == 4
+      return "love" if @points == 0 
+      return "fifteen" if @points == 1
+      return "thirty" if @points == 2
+      return "forty" if @points == 3 && @opponent.points < 3
+      return "duece" if @points == 3 && @opponent.points == 3
+      return "advantage" if @points >= 4 && @points == @opponent.points + 1
+      return "You won the game!" if (@points >= 3 && @opponent.points < 3) || (@points >= 3 && @opponent.points >= 3 && @points > @opponent.points + 1)
     end
   end
 end
